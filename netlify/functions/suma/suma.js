@@ -1,10 +1,13 @@
-// Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
 const handler = async (event) => {
   try {
-    const subject = event.queryStringParameters.name || 'World'
+
+    const num1 = event.queryStringParameters.num1 || 0
+    const num2 = event.queryStringParameters.num2 || 0
+    const resultado = num1 + num2
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: `Hello ${subject}` }),
+      body: JSON.stringify({ message: resultado}),
     }
   } catch (error) {
     return { statusCode: 500, body: error.toString() }
