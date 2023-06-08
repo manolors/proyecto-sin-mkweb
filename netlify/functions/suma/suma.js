@@ -1,18 +1,26 @@
+function isNumeric(str) {
+  return !isNaN(str) && !isNaN(parseFloat(str));
+}
+
 const handler = async (event) => {
   try {
+    const num1 = event.queryStringParameters.num1 || false;
+    const num2 = event.queryStringParameters.num2 || false;
 
-    const num1 = parseInt(event.queryStringParameters.num1) || 0
-    const num2 = parseInt(event.queryStringParameters.num2) || 0
-
-    const resultado = num1 + num2
+    if (!num1 || !num2 || !isNumeric(num1) || !isNumeric(num2)) {
+      return {
+        statusCode: 400,
+        body: "Please provide valid num1 and num2!!!",
+      };
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: resultado }),
-    }
+      body: JSON.stringify({ suma: parseInt(num1) + parseInt(num2) }),
+    };
   } catch (error) {
-    return { statusCode: 500, body: error.toString() }
+    return { statusCode: 500, body: error.toString() };
   }
-}
+};
 
-module.exports = { handler }
+module.exports = { handler };
